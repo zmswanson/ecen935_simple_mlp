@@ -1,3 +1,27 @@
+%{
+    File: multilayer_perceptron.m
+    Author: Zachary M Swanson
+    Date: 09-25-2024
+    Description: This class defines a multilayer perceptron (MLP) with a specified number of input,
+                 hidden, and output nodes, as well as learning and momentum gains. The class provides
+                 methods to set the learning and momentum gains, perform the forward pass through the
+                 MLP, train the MLP, and evaluate the performance.
+    Usage: Create an instance of the class with the desired parameters, e.g.,
+                mlp = multilayer_perceptron(n_input, n_hidden, n_output, learning_gain, momentum_gain);
+            Perform the forward pass through the MLP using the forward method, e.g.,
+                y = mlp.forward(x);
+            Train the MLP using the train method, e.g.,
+                train_mse = mlp.train(train_x, train_y);
+            Evaluate the performance of the MLP using the evaluate method, e.g.,
+                mse = mlp.evaluate(test_x, test_y);
+    Notes: The MLP uses the zms_sigmoid activation function defined in activation_funcs.m and the
+           mlp_layer class defined in mlp_layer.m.
+
+           This a very simple implementation of a multilayer perceptron (MLP) for educational
+           and much more work would be necessary to extend it to more complex architectures and
+           more diverse activation functions.
+%}
+
 classdef multilayer_perceptron < handle
     properties
         hidden_layer
@@ -79,7 +103,7 @@ classdef multilayer_perceptron < handle
 
             train_mse = train_mse / length(x);
         end
-
+        
         function mse = evaluate(obj, x, y)
             arguments
                 obj

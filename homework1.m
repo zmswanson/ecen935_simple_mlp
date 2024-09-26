@@ -1,3 +1,13 @@
+%{
+    File: homework1.m
+    Author: Zachary M Swanson
+    Date: 09-25-2024
+    Description: This script trains a multilayer perceptron (MLP) to fit a quadratic function, as
+                 described in homework 1 for ECEN 935 (Computational Intelligence) at UNL. The
+                 script performs a train-test split, trains the MLP with various hyperparameters,
+                 and evaluates the performance. The results are saved as plots and in a CSV file.
+    Usage: Run this script in MATLAB to train the MLP and generate the results.
+%}
 rng(42); % Set random seed for reproducibility
 
 x = [-1:0.01:1];
@@ -33,7 +43,7 @@ n_output = 1;
 learning_gain = [0.01];
 momentum_gain = [0.1];
 
-for n_hidden = [3, 4, 6, 7, 8, 9, 10]
+for n_hidden = [15, 20, 25, 30, 50, 100]
     for i = learning_gain
         for j = momentum_gain
             fprintf('--------------------------------------------------------------------------------\n');
