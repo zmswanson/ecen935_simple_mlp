@@ -1,5 +1,5 @@
 %{
-    File: homework1.m
+    File: main.m
     Author: Zachary M Swanson
     Date: 09-25-2024
     Description: This script trains a multilayer perceptron (MLP) to fit a quadratic function, as
