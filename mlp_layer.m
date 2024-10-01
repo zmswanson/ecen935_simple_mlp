@@ -23,38 +23,44 @@ classdef mlp_layer
         num_nodes
         activation_function
         weights
-        biases
     end
 
     methods
-        function obj = mlp_layer(num_nodes, activation_function, weights, biases)
+        function obj = mlp_layer(num_nodes, activation_function, weights)
             arguments
                 num_nodes (1, 1) {mustBeNumeric, mustBeGreaterThan(num_nodes, 0)}
                 activation_function
                 weights (:, :) {mustBeNumeric, mustBeInRange(weights, -1, 1)}
-                biases (:, 1) {mustBeNumeric, mustBeInRange(biases, -1, 1)}
+                
             end
 
             obj.num_nodes = num_nodes;
             obj.activation_function = activation_function;
-            obj.weights = weights;
-            obj.biases = biases;
+            for i = 1:num_nodes
+                obj.weights(i, :) = [weights(i, :), rand()]; % Concatenate a random bias to each set of weights
+            end
+            % disp(['Layer created with ', num2str(num_nodes), ' nodes']);
+            % disp(['Weights: ', num2str(size(obj.weights))]);
         end
 
         function set_weights(obj, weights)
-            obj.weights = weights;
+            for i = 1:obj.num_nodes
+                obj.weights(i, 1:end-1) = weights(i, :);
+            end
         end
 
         function set_biases(obj, biases)
-            obj.biases = biases;
+            for i = 1:obj.num_nodes
+                obj.weights(i, end) = biases(i);
+            end
         end
 
         function w = get_weights(obj)
-            w = obj.weights;
+            w = obj.weights(:, 1:end-1);
         end
 
         function b = get_biases(obj)
-            b = obj.biases;
+            b = obj.weights(:, end);
         end
 
         function fn = get_activation_function(obj)
@@ -65,7 +71,7 @@ classdef mlp_layer
             a = zeros(obj.num_nodes, 1);
 
             for i = 1:obj.num_nodes
-                a(i) = dot(x, obj.weights(i, :)) + obj.biases(i);
+                a(i) = obj.weights(i, 1:end-1) * x + obj.weights(i, end);
             end
 
             % Apply the activation function if it is not empty

@@ -40,10 +40,13 @@ n_output = 1;
 % learning_gain = [0.01, 0.1, 0.5, 0.7, 0.9,  1];
 % momentum_gain = [0, 0.0001, 0.001, 0.01, 0.1, 0.5, 0.7, 0.9, 1];
 
-learning_gain = [0.01];
-momentum_gain = [0.1];
+% learning_gain = [0.01];
+% momentum_gain = [0.1];
 
-for n_hidden = [15, 20, 25, 30, 50, 100]
+learning_gain = [0.01];
+momentum_gain = [0.7];
+
+for n_hidden = [5]
     for i = learning_gain
         for j = momentum_gain
             fprintf('--------------------------------------------------------------------------------\n');
@@ -59,10 +62,18 @@ for n_hidden = [15, 20, 25, 30, 50, 100]
                     fprintf('Epoch %d: MSE = %f\n', k, mse(k));
                 end
             end
-
+            
             min_mse = min(mse);
             avg_mse = mean(mse);
             test_mse = mlp.evaluate(test_x, test_y);
+
+            % % calculate the second derivative of the MSE versus epochs curve
+            % second_derivative = diff(diff(mse));
+            % [min_second_derivative, min_second_derivative_index] = min(second_derivative);
+            % [max_second_derivative, max_second_derivative_index] = max(second_derivative);
+
+            % fprintf('Convergence: %d epochs\n', min_second_derivative_index);
+            % fprintf('Slowdown: %d epochs\n', max_second_derivative_index);
 
             % plot the MSE over the epochs on a log scale... write plot to file
             figure("visible", "off");
